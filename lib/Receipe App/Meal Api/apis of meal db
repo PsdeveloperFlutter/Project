@@ -1,0 +1,30 @@
+filter by category
+www.themealdb.com/api/json/v1/1/filter.php?c=Seafood
+
+
+    Images
+Meal Thumbnail Images
+Add /preview to the end of the meal image URL
+/images/media/meals/llcbn01574260722.jpg/preview
+
+
+    List all meal categories
+www.themealdb.com/api/json/v1/1/categories.php
+
+
+    Lookup a single random meal
+www.themealdb.com/api/json/v1/1/random.php
+
+    Lookup full meal details by id
+www.themealdb.com/api/json/v1/1/lookup.php?i=52772
+
+
+    Search meal by name
+www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata
+
+
+
+
+//This api is for searching receipe with first letter
+List all meals by first letter
+www.themealdb.com/api/json/v1/1/search.php?f=a
