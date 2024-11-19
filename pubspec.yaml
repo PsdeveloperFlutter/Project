@@ -41,6 +41,7 @@ dependencies:
   sqflite: ^2.2.0+3
   syncfusion_flutter_datepicker: ^27.1.58
   path_provider: ^2.0.13
+  shared_preferences: ^2.3.3
   path: ^1.9.0
   arcore_flutter_plugin: ^0.1.0
   fluttertoast: ^8.2.8
