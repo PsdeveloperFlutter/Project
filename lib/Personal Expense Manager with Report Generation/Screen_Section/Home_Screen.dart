@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:shimmer/shimmer.dart';
 import '../Database_section/Database_part.dart';
+import '../Database_section/Fl_chart_representation.dart';
 
 
 // Theme Controller for Dark/Light Mode
@@ -142,6 +143,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                                 expense: expense,
                               ),
                             ),
+,
                             const Gap(5),
                             NeoPopButton(
                               color: themeController.isDarkMode.value
