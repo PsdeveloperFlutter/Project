@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,137 +9,115 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Ride Selection UI',
-      home: SelectRidePage(),
+      title: 'Select Payment Method UI',
+      home: SelectPaymentPage(),
     );
   }
 }
 
-class SelectRidePage extends StatelessWidget {
+class SelectPaymentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             // Handle back navigation
           },
         ),
-        title: const Text(
-          'Select Ride',
-          style: TextStyle(color: Colors.black),
+        title: Text(
+          'Select Payment Method',
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
         centerTitle: true,
       ),
-      backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 10),
-            // Ride Date Info
-            const Text(
-              'Ride Date : Tue, 16th Sep 24 At 11:00 am',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            // Ride Seat Info
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RichText(
-                  text: const TextSpan(
-                    children: [
-                      TextSpan(
-                        text: '1 seat x ₹500',
-                        style: TextStyle(color: Colors.blue, fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ),
-                const Text(
-                  '₹500',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            // Booking Fees Info
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Booking Fees',
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  '₹40',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Divider(),
-            const Gap(210),
-            // Total Price Section
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.green.shade50,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.green),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Total Price',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        'for 1 Passenger',
-                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    '₹500',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green),
-                  ),
-                ],
-              ),
-            ),
-            const Spacer(),
-            // Continue Button
+            // Payment Method Options
+            PaymentOptionTile(icon: Icons.money, label: 'Cash'),
+            SizedBox(height: 10),
+            PaymentOptionTile(icon: Icons.credit_card, label: 'Card'),
+            SizedBox(height: 10),
+            PaymentOptionTile(icon: Icons.account_balance_wallet, label: 'Wallet', badge: 'Default'),
+            Spacer(),
+            // Pay Now Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Handle Continue button action
+                  // Handle Pay Now button action
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  backgroundColor: Colors.black,
+                  padding: EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: const Text(
-                  'Continue',
+                child: Text(
+                  'Pay Now',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// Reusable Widget for Payment Option Tile
+class PaymentOptionTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String? badge; // Optional badge label
+
+  const PaymentOptionTile({required this.icon, required this.label, this.badge});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 30, color: Colors.black54),
+              SizedBox(width: 15),
+              Text(
+                label,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          // Display badge if it exists
+          if (badge != null)
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                badge!,
+                style: TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
+        ],
       ),
     );
   }
