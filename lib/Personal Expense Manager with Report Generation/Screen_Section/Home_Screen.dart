@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:gap/gap.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:untitled/Personal%20Expense%20Manager%20with%20Report%20Generation/Database_section/Fl_chart_representation.dart';
 import '../Database_section/Database_part.dart';
-import '../Database_section/Fl_chart_representation.dart';
 
 
 // Theme Controller for Dark/Light Mode
@@ -146,11 +146,14 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
 
                             const Gap(5),
                             NeoPopButton(
+
                               color: themeController.isDarkMode.value
                                   ? Colors.grey.shade800
                                   : Colors.blue.shade500,
                               depth: 3,
                               onTapUp: () {
+
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => BarChartPage(storevalue: getthevalue(controller.expenses.length,controller.expenses))));
                                 print("Generate a new report");
                               },
                               border: Border.all(
@@ -225,6 +228,27 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
       },
     );
   }
+
+  //This is the default method
+  RxList <dynamic>givethevalue(double amount, DateTime date, int index, var value) {
+    RxList storevalues = [].obs;
+    for (int i = 0; i <index; i++) {
+      storevalues.add(value[i]);
+    }
+    return storevalues;
+  }
+
+  RxList<dynamic>getthevalue(int length, RxList<Expense> expenses) {
+    RxList storevalues = [].obs;
+    for (int i = 0; i < length; i++) {
+      storevalues.add(expenses[i]);
+    }
+    return storevalues;
+  }
+
+
+
+
 }
 
 // Main Function

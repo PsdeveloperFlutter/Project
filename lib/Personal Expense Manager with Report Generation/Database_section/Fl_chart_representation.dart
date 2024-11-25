@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart'; // Import the fl_chart package
-
-void main() {
-  runApp(MyApp());
-}
-
-// Main app widget
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: BarChartPage(), // The BarChartPage is our main page
-    );
-  }
-}
+import 'package:fl_chart/fl_chart.dart';
+import 'package:get/get.dart'; // Import the GetX package
 
 // Page that displays the bar chart
-class BarChartPage extends StatelessWidget {
+class BarChartPage extends StatefulWidget {
+  final RxList<dynamic> storevalue; // Corrected type and syntax
+
+  BarChartPage({required this.storevalue}); // Constructor to receive data
+
+  @override
+  State<BarChartPage> createState() => _BarChartPageState();
+}
+
+class _BarChartPageState extends State<BarChartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bar Chart Example'), // App bar title
+        title: Text('Graph Represention '), // Displaying the amount in the title
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0), // Add padding around the chart
-        child: BarChartSample(), // The custom bar chart widget
-      ),
+        padding: const EdgeInsets.all(10.0),
+        child: BarChartSample(storevalue: widget.storevalue),
+      ), // Pass data to BarChartSample
     );
   }
 }
 
 // Custom widget for the bar chart
-class BarChartSample extends StatelessWidget {
+class BarChartSample extends StatefulWidget {
+  final RxList<dynamic> storevalue; // Corrected type
+
+  BarChartSample({required this.storevalue});
+
+  @override
+  State<BarChartSample> createState() => _BarChartSampleState();
+}
+
+class _BarChartSampleState extends State<BarChartSample> {
   @override
   Widget build(BuildContext context) {
     return BarChart(
-      BarChartData( // Main bar chart data configuration
-        barGroups: getBarGroups(), // Sets the bar data
+      BarChartData(
+        barGroups: getBarGroups(), // Set the bar data
         titlesData: FlTitlesData(
-          // Customizes chart titles (axes labels)
           topTitles: const AxisTitles(
             sideTitles: SideTitles(
               showTitles: false, // Hide top axis labels
@@ -60,32 +63,41 @@ class BarChartSample extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text(
-                    'Label ${value.toInt() + 1}',
-                    style: const TextStyle(fontSize: 6),
+                    '${widget.storevalue[value.toInt()].category} ${value.toInt() + 1}',
+                    style: const TextStyle(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold),
                   ),
                 );
               },
             ),
           ),
         ),
-        borderData: FlBorderData(show: false), // Hide the border around the chart
-        gridData: const FlGridData(show: false), // Hide the grid lines
+        borderData: FlBorderData(show: true
+        ,border: Border.all(color: Colors.black,width: 2),
+        ), // Hide the border around the chart
+        gridData:  FlGridData(show: true,
+
+        ), // Hide the grid lines
       ),
-      // Updated curve and duration
-      duration: const Duration(milliseconds: 800), // Set animation duration
-      curve: Curves.easeInOut, // Set animation curve
+      // Set animation duration and curve
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.fastOutSlowIn,
     );
   }
 
   // Function that defines the data for the bars
   List<BarChartGroupData> getBarGroups() {
-    // List of bar chart data groups
-    return [
-      BarChartGroupData(x: 0, barRods: [BarChartRodData(toY: 18, color: Colors.blue)]),
-      BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 20, color: Colors.green)]),
-      BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 14, color: Colors.orange)]),
-      BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 15, color: Colors.red)]),
-      BarChartGroupData(x: 4, barRods: [BarChartRodData(toY: 13, color: Colors.purple)]),
-    ];
+    // Create a list of BarChartGroupData objects dynamically from storevalue
+    return List.generate(widget.storevalue.length, (index) {
+      return BarChartGroupData(
+        x: index,
+        barRods: [
+          BarChartRodData(
+            gradient: LinearGradient(colors: [Colors.yellow.shade500, Colors.cyan]),
+            toY: widget.storevalue[index].amount.toDouble(), // Ensure it's a double
+            color: index%2==0 ? Colors.green.shade500 : Colors.cyan,
+          ),
+        ],
+      );
+    });
   }
 }
