@@ -39,21 +39,19 @@ class BarChartSample extends StatelessWidget {
   Widget build(BuildContext context) {
     return BarChart(
       BarChartData( // Main bar chart data configuration
-
         barGroups: getBarGroups(), // Sets the bar data
         titlesData: FlTitlesData(
           // Customizes chart titles (axes labels)
-
           topTitles: const AxisTitles(
             sideTitles: SideTitles(
               showTitles: false, // Hide top axis labels
-            )
+            ),
           ),
           rightTitles: const AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: false, // Display right axis labels
-          )
-        ),
+            sideTitles: SideTitles(
+              showTitles: false, // Hide right axis labels
+            ),
+          ),
           bottomTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true, // Display bottom axis titles
@@ -63,17 +61,19 @@ class BarChartSample extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text(
                     'Label ${value.toInt() + 1}',
-                    style: const TextStyle(fontSize:6),
+                    style: const TextStyle(fontSize: 6),
                   ),
                 );
               },
             ),
           ),
         ),
-
         borderData: FlBorderData(show: false), // Hide the border around the chart
         gridData: const FlGridData(show: false), // Hide the grid lines
       ),
+      // Updated curve and duration
+      duration: const Duration(milliseconds: 800), // Set animation duration
+      curve: Curves.easeInOut, // Set animation curve
     );
   }
 
@@ -82,7 +82,7 @@ class BarChartSample extends StatelessWidget {
     // List of bar chart data groups
     return [
       BarChartGroupData(x: 0, barRods: [BarChartRodData(toY: 18, color: Colors.blue)]),
-      BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 10, color: Colors.green)]),
+      BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 20, color: Colors.green)]),
       BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 14, color: Colors.orange)]),
       BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 15, color: Colors.red)]),
       BarChartGroupData(x: 4, barRods: [BarChartRodData(toY: 13, color: Colors.purple)]),

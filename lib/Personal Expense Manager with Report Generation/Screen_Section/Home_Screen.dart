@@ -143,7 +143,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                                 expense: expense,
                               ),
                             ),
-,
+
                             const Gap(5),
                             NeoPopButton(
                               color: themeController.isDarkMode.value
