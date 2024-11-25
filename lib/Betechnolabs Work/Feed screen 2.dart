@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 void main() {
   runApp(MyApp());
@@ -84,7 +85,7 @@ class SelectRidePage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             const Divider(),
-            const SizedBox(height: 10),
+            const Gap(210),
             // Total Price Section
             Container(
               padding: const EdgeInsets.all(10),
