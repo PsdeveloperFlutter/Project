@@ -37,7 +37,30 @@ class _pdf_generateState extends State<pdf_generate> {
                 },
                 child: Text("Paragraph Pdf"),
               ),
-            )
+            ),
+
+            //Table PDF created with pdf file
+
+            Center(
+                child: ElevatedButton(
+              onPressed: () async {
+                final tablepdf = await Tablepdfapi.generatetable();
+                saveandopendocument.openFile(tablepdf);
+              },
+              child: Text("Table Pdf "),
+            ))
+
+            //Image Generation
+
+            ,
+            Center(
+                child: ElevatedButton(
+              onPressed: () async {
+                final imagepdf = await ImagePdfApi.generateImagePdf();
+                saveandopendocument.openFile(imagepdf);
+              },
+              child: Text("Image Pdf "),
+            ))
           ]),
     );
   }
