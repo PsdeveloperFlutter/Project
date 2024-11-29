@@ -67,15 +67,15 @@ class Simplepdfapi {
         return Center(
           child: Column(
               children: [
-                Text(text,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
-                Text(text2,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 40),),
-                Text(text3,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 40))
+                Text("Description ${text3}",style: TextStyle(fontWeight: FontWeight.normal,fontSize: 40)),
+                Text("Category ${text2}",style: TextStyle(fontWeight: FontWeight.normal,fontSize: 40),),
+                Text("Price ${text}",style: TextStyle(fontWeight: FontWeight.normal,fontSize: 30),),
               ]
           ),
         );
       }),
     );
-    return saveandopendocument.saveDocument(name: "example.pdf", pdf: pdf);
+    return saveandopendocument.saveDocument(name: "example_kk.pdf", pdf: pdf);
   }
 }
 
