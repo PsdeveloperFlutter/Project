@@ -22,7 +22,7 @@ class _pdf_generateState extends State<pdf_generate> {
                 onPressed: () async {
                   final simplePdffile =
                       await Simplepdfapi.generateSimpletextpdf(
-                          "Hello", "World");
+                          "Hello", "World","Priyanshu");
                   saveandopendocument.openFile(simplePdffile);
                 },
                 child: Text("Generate PDF"),
