@@ -63,8 +63,8 @@ class _BarChartSampleState extends State<BarChartSample> {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text(
-                    '${widget.storevalue[value.toInt()].category} ${value.toInt() + 1}',
-                    style: const TextStyle(fontSize: 12,color: Colors.black,fontWeight:FontWeight.bold),
+                    '${widget.storevalue[value.toInt()].category}',
+                    style: const TextStyle(fontSize: 12,fontWeight:FontWeight.bold),
                   ),
                 );
               },

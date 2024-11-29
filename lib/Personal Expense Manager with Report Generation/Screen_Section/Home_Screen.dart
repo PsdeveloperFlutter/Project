@@ -42,23 +42,83 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     return Obx(() {
       return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
-          items: const[
+          items: [
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.home),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.profile_circled),
-              label: 'Profile',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.settings),
-              label: 'Settings',
-            ),
+              icon:InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SizedBox(
+                        width: 400,
+                        height: 400, // Set the desired height of the dialog box
+                        child: AlertDialog(
+                          title: const Text('Settings',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                          content: const Text('Set currency ',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w700),),
+                          actions: [
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    child: const Text('USD'),
+                                  ),
+                                  const Gap(40,),
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    child: const Text('EUR'),
+                                  ),
+                                ],
+                              ),
+                            ),
 
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Gap(30),
+                                const Text('Select Options',style: TextStyle(fontSize: 12,fontWeight: FontWeight.w700),),
+                                const Gap(10),
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {},
+                                        child: const Text('Month',style: TextStyle(fontSize: 12),),
+                                      ),
+                                      const Gap(40,),
+                                      ElevatedButton(
+                                        onPressed: () {},
+                                        child: const Text('Year',style: TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ]
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: const Icon(CupertinoIcons.settings_solid),
+              ),
+
+              label: 'Setting',
+            ),
           ],
             currentIndex: _selectedIndex,
-            selectedItemColor: Colors.black,
             iconSize: 25,// Adjust the size of the icons,
             onTap: _onItemTapped,
         ),
@@ -121,8 +181,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                 elevation: 4,
                 child: ExpansionTile(
                   title: Text(
-                    expense.description,
-                    style: const TextStyle(fontFamily: 'Itim'),
+                    expense.category,
+                    style: const TextStyle(fontFamily: 'Itim', fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   children: [
                     ClipRRect(
@@ -145,27 +205,64 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                             ),
 
                             const Gap(5),
-                            NeoPopButton(
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Gap(10),
+                                    NeoPopButton(
+                                      color: themeController.isDarkMode.value
+                                          ? Colors.grey.shade800
+                                          : Colors.blue.shade500,
+                                      depth: 3,
+                                      onTapUp: () {
 
-                              color: themeController.isDarkMode.value
-                                  ? Colors.grey.shade800
-                                  : Colors.blue.shade500,
-                              depth: 3,
-                              onTapUp: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => BarChartPage(storevalue: getthevalue(controller.expenses.length,controller.expenses))));
+                                        print("Generate chart");
+                                      },
 
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => BarChartPage(storevalue: getthevalue(controller.expenses.length,controller.expenses))));
-                                print("Generate a new report");
-                              },
-                              border: Border.all(
-                                  color: themeController.isDarkMode.value
-                                      ? Colors.grey.shade700
-                                      : Colors.blue.shade700,
-                                  width: 1),
-                              child: const Text(
-                                "Generate a new report",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Itim'),
+                                      border: Border.all(
+                                          color: themeController.isDarkMode.value
+                                              ? Colors.grey.shade700
+                                              : Colors.blue.shade700,
+                                          width: 1),
+                                      child: const Text(
+                                        "Generate a new report",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Itim'),
+                                      ),
+                                    ),
+                                    const Gap(20),
+                                    NeoPopButton(
+                                      color: themeController.isDarkMode.value
+                                          ? Colors.grey.shade800
+                                          : Colors.blue.shade500,
+                                      depth: 3,
+                                      onTapUp: () {
+
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => BarChartPage(storevalue: getthevalue(controller.expenses.length,controller.expenses))));
+                                        print("See Chart Report");
+                                      },
+
+                                      border: Border.all(
+                                          color: themeController.isDarkMode.value
+                                              ? Colors.grey.shade700
+                                              : Colors.blue.shade700,
+                                          width: 1),
+                                      child: const Text(
+                                        "Generate Pdf",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Itim'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             const Gap(5),
