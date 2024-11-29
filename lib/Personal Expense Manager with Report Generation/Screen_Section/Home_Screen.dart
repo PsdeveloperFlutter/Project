@@ -6,6 +6,7 @@ import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:untitled/Personal%20Expense%20Manager%20with%20Report%20Generation/Database_section/Database_Month_Expense_.dart';
 import 'package:untitled/Personal%20Expense%20Manager%20with%20Report%20Generation/Database_section/Fl_chart_representation.dart';
+import 'package:untitled/Personal%20Expense%20Manager%20with%20Report%20Generation/Pdf_generate/save_and%20_open_pdf.dart';
 import '../Database_section/Database_part.dart';
 
 // ----------------------------------------------------------------//
@@ -260,8 +261,14 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                                             ? Colors.grey.shade800
                                             : Colors.blue.shade500,
                                         depth: 3,
-                                        onTapUp: () {
-
+                                        onTapUp: () async{
+                                          var store=showyearandmonth ==true ? controller.expenses[index].amount : controllermonth.expenses[index].amount_month.toString();
+                                          var store1=showyearandmonth ==true ? controller.expenses[index].category : controllermonth.expenses[index].category_month.toString();
+                                          var store2=showyearandmonth ==true ? controller.expenses[index].description : controllermonth.expenses[index].description_month.toString();
+                                          final simplePdffile =
+                                              await Simplepdfapi.generateSimpletextpdf(
+                                              store1.toString(),store.toString(),store2.toString() );
+                                          saveandopendocument.openFile(simplePdffile);
                                           print("See Chart Report");
                                         },
 

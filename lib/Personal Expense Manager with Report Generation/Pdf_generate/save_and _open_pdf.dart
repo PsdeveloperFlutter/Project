@@ -60,16 +60,16 @@ class saveandopendocument {
 
 
 class Simplepdfapi {
-  static Future<File> generateSimpletextpdf(String text, String text2) async {
+  static Future<File> generateSimpletextpdf(String text, String text2,String text3) async {
     final pdf = Document(); //creating a document
     pdf.addPage(
       Page(build: (Context context) {
         return Center(
           child: Column(
               children: [
-                Text(text,style: TextStyle(fontWeight: FontWeight.bold),),
-                Text(text2,style: TextStyle(fontWeight: FontWeight.bold),),
-
+                Text(text,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
+                Text(text2,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 40),),
+                Text(text3,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 40))
               ]
           ),
         );
