@@ -118,7 +118,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Image.asset(
-                  'assets/images/Mealimage.webp', // Ensure this path is correct
+                  'assets/images/recipeapp_logo.png', // Ensure this path is correct
                   width: 150,
                   height: 150,
                   fit: BoxFit.contain,
