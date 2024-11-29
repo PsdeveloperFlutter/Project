@@ -4,9 +4,15 @@ import 'package:get/get.dart';
 import 'package:gap/gap.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:untitled/Personal%20Expense%20Manager%20with%20Report%20Generation/Database_section/Database_Month_Expense_.dart';
 import 'package:untitled/Personal%20Expense%20Manager%20with%20Report%20Generation/Database_section/Fl_chart_representation.dart';
 import '../Database_section/Database_part.dart';
 
+// ----------------------------------------------------------------//
+//It is VERY IMPORTANT that you have a database file named 'expense.db'//
+// ----------------------------------------------------------------//
+//IT IS VERY IMPORTANT FOR SHOWING THE DATA OF MONTH AND YEAR
+Rx<dynamic>showyearandmonth = true.obs; //If it is true so it shows the year anotherwise month
 
 // Theme Controller for Dark/Light Mode
 class ThemeController extends GetxController {
@@ -27,7 +33,8 @@ class ExpensesScreen extends StatefulWidget {
 }
 
 class _ExpensesScreenState extends State<ExpensesScreen> {
-  final ExpensesController controller = Get.put(ExpensesController());
+  final ExpensesController controller = Get.put(ExpensesController()); //It is for the controller that of years
+  final MonthlyExpensesController controllermonth = Get.put(MonthlyExpensesController()); //It is for the controller that of months
 
   final ThemeController themeController = Get.put(ThemeController());
 
@@ -93,15 +100,27 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+
+                                          setState(() {
+                                            showyearandmonth.value=false;
+                                                   Navigator.pop(context);
+                                          });
+
+                                        },
                                         child: const Text('Month',style: TextStyle(fontSize: 12),),
                                       ),
                                       const Gap(40,),
                                       ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            showyearandmonth.value=true;
+                                            Navigator.pop(context);
+                                          });
+                                          },
                                         child: const Text('Year',style: TextStyle(fontSize: 12),
                                       ),
-                                    ],
+                                      ),],
                                   ),
                                 ),
                               ]
@@ -156,128 +175,126 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
             ),
           ],
         ),
-        body: controller.expenses.isEmpty
-            ? _buildShimmerEffect() // Show shimmer if the list is empty or loading
-            : ListView.builder(
-          itemCount: controller.expenses.length,
-          itemBuilder: (context, index) {
-            final expense = controller.expenses[index];
-            return Dismissible(
-              background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: const Icon(Icons.delete, color: Colors.white),
-              ),
-              secondaryBackground: Container(
-                color: Colors.green,
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: const Icon(Icons.edit, color: Colors.white),
-              ),
-              key: UniqueKey(),
-              onDismissed: (_) => controller.deleteExpense(expense.id!),
-              child: Card(
-                elevation: 4,
-                child: ExpansionTile(
-                  title: Text(
-                    expense.category,
-                    style: const TextStyle(fontFamily: 'Itim', fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        margin: const EdgeInsets.all(2),
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: Text(expense.description),
-                              subtitle: Text(
-                                  '${expense.amount.toStringAsFixed(2)} ${expense.category}'),
-                              trailing: Text(
-                                '${expense.date.toLocal().toString().split(' ')[0]}',
+        body: Obx((){
+          return ListView.builder(
+            itemCount: showyearandmonth ==true ? controller.expenses.length : controllermonth.expenses.length,
+            itemBuilder: (context, index) {
+              var expense =  showyearandmonth ==true ? controller.expenses[index] : controllermonth.expenses[index];
+              return Dismissible(
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Icon(Icons.delete, color: Colors.white),
+                ),
+                secondaryBackground: Container(
+                  color: Colors.green,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: const Icon(Icons.edit, color: Colors.white),
+                ),
+                key: UniqueKey(),
+                onDismissed: (_) => showyearandmonth ==true ? controller.deleteExpense(controller.expenses[index].id!): controllermonth.deleteExpense(controllermonth.expenses[index].id!),
+                child: Card(
+                  elevation: 4,
+                  child: ExpansionTile(
+                    title: Text(
+                      showyearandmonth ==true ? controller.expenses[index].category : controllermonth.expenses[index].category_month,
+                      style: const TextStyle(fontFamily: 'Itim', fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          margin: const EdgeInsets.all(2),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Text(showyearandmonth ==true ? controller.expenses[index].description : controllermonth.expenses[index].description_month,),
+                                subtitle: Text(
+                                    '${showyearandmonth ==true ? controller.expenses[index].amount : controllermonth.expenses[index].amount_month
+                                        .toStringAsFixed(2)} ${showyearandmonth ==true ? controller.expenses[index].category : controllermonth.expenses[index].category_month }'),
+                                trailing: Text(showyearandmonth==true ? controller.expenses[index].date.toString() : "Month ${controllermonth.expenses[index].month_month.toString()} Year ${controllermonth.expenses[index].year_month.toString()}"),
+                                onTap: () => showyearandmonth ==true ? controller.openBottomSheet(
+                                  context,
+                                  expense: expense as Expense,
+                                ): controllermonth.openBottomSheet(context, expense: expense as MonthlyExpense),
                               ),
-                              onTap: () => controller.openBottomSheet(
-                                context,
-                                expense: expense,
-                              ),
-                            ),
 
-                            const Gap(5),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const Gap(10),
-                                    NeoPopButton(
-                                      color: themeController.isDarkMode.value
-                                          ? Colors.grey.shade800
-                                          : Colors.blue.shade500,
-                                      depth: 3,
-                                      onTapUp: () {
+                              const Gap(5),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      const Gap(10),
+                                      NeoPopButton(
+                                        color: themeController.isDarkMode.value
+                                            ? Colors.grey.shade800
+                                            : Colors.blue.shade500,
+                                        depth: 3,
+                                        onTapUp: () {
 
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => BarChartPage(storevalue: getthevalue(controller.expenses.length,controller.expenses))));
-                                        print("Generate chart");
-                                      },
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => BarChartPage(storevalue: showyearandmonth ==true ? getthevalue(controller.expenses.length,controller.expenses):getthevalueformonth(controllermonth.expenses.length,controllermonth.expenses))));
+                                          print("Generate chart");
+                                        },
 
-                                      border: Border.all(
-                                          color: themeController.isDarkMode.value
-                                              ? Colors.grey.shade700
-                                              : Colors.blue.shade700,
-                                          width: 1),
-                                      child: const Text(
-                                        "Generate a new report",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Itim'),
+                                        border: Border.all(
+                                            color: themeController.isDarkMode.value
+                                                ? Colors.grey.shade700
+                                                : Colors.blue.shade700,
+                                            width: 1),
+                                        child: const Text(
+                                          "Generate a new report",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Itim'),
+                                        ),
                                       ),
-                                    ),
-                                    const Gap(20),
-                                    NeoPopButton(
-                                      color: themeController.isDarkMode.value
-                                          ? Colors.grey.shade800
-                                          : Colors.blue.shade500,
-                                      depth: 3,
-                                      onTapUp: () {
+                                      const Gap(20),
+                                      NeoPopButton(
+                                        color: themeController.isDarkMode.value
+                                            ? Colors.grey.shade800
+                                            : Colors.blue.shade500,
+                                        depth: 3,
+                                        onTapUp: () {
 
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => BarChartPage(storevalue: getthevalue(controller.expenses.length,controller.expenses))));
-                                        print("See Chart Report");
-                                      },
+                                          print("See Chart Report");
+                                        },
 
-                                      border: Border.all(
-                                          color: themeController.isDarkMode.value
-                                              ? Colors.grey.shade700
-                                              : Colors.blue.shade700,
-                                          width: 1),
-                                      child: const Text(
-                                        "Generate Pdf",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Itim'),
+                                        border: Border.all(
+                                            color: themeController.isDarkMode.value
+                                                ? Colors.grey.shade700
+                                                : Colors.blue.shade700,
+                                            width: 1),
+                                        child: const Text(
+                                          "Generate Pdf",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Itim'),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            const Gap(5),
-                          ],
+                              const Gap(5),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
+              );
+            },
+          );
+        }),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => controller.openBottomSheet(context),
+          onPressed: () => showyearandmonth ==true ? controller.openBottomSheet(context):controllermonth.openBottomSheet(context),
           child: const Icon(Icons.add),
         ),
       );
@@ -336,6 +353,14 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   }
 
   RxList<dynamic>getthevalue(int length, RxList<Expense> expenses) {
+    RxList storevalues = [].obs;
+    for (int i = 0; i < length; i++) {
+      storevalues.add(expenses[i]);
+    }
+    return storevalues;
+  }
+
+  RxList<dynamic>getthevalueformonth(int length, RxList<MonthlyExpense> expenses) {
     RxList storevalues = [].obs;
     for (int i = 0; i < length; i++) {
       storevalues.add(expenses[i]);

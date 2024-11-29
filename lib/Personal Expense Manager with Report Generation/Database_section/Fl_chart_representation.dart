@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:get/get.dart'; // Import the GetX package
+import 'package:get/get.dart';
+import 'package:untitled/Personal%20Expense%20Manager%20with%20Report%20Generation/Screen_Section/Home_Screen.dart'; // Import the GetX package
 
 // Page that displays the bar chart
 class BarChartPage extends StatefulWidget {
@@ -63,7 +64,7 @@ class _BarChartSampleState extends State<BarChartSample> {
                 return Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text(
-                    '${widget.storevalue[value.toInt()].category}',
+                    '${ showyearandmonth.value? widget.storevalue[value.toInt()].category:widget.storevalue[value.toInt()].month_month}',
                     style: const TextStyle(fontSize: 12,fontWeight:FontWeight.bold),
                   ),
                 );
@@ -93,7 +94,7 @@ class _BarChartSampleState extends State<BarChartSample> {
         barRods: [
           BarChartRodData(
             gradient: LinearGradient(colors: [Colors.yellow.shade500, Colors.cyan]),
-            toY: widget.storevalue[index].amount.toDouble(), // Ensure it's a double
+            toY: showyearandmonth.value ? widget.storevalue[index].amount.toDouble() : widget.storevalue[index].amount_month.toDouble(), // Ensure it's a double
             color: index%2==0 ? Colors.green.shade500 : Colors.cyan,
           ),
         ],
