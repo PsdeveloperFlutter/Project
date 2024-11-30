@@ -14,7 +14,30 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class NewRideScreen extends StatelessWidget {
+class NewRideScreen extends StatefulWidget {
+  @override
+  _NewRideScreenState createState() => _NewRideScreenState();
+}
+
+class _NewRideScreenState extends State<NewRideScreen> {
+  DateTime? _selectedDate; // To store the selected date
+  int _personCount = 1; // To track the number of persons
+
+  // Function to show the Date Picker
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    );
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +76,7 @@ class NewRideScreen extends StatelessWidget {
                 child: const Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage('assets/profile.jpg'),
+                      backgroundImage: AssetImage('assets/images/profile.png'),
                       radius: 24,
                     ),
                     SizedBox(width: 16),
@@ -86,28 +109,54 @@ class NewRideScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               // Pricing Section
-              const Text(
-                'Recommended Pricing',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                '\u{20B9}550.40',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green),
-              ),
+             const Row(
+               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               crossAxisAlignment: CrossAxisAlignment.center,
+               children: [
+                 Text(
+                   'Recommended Pricing',
+                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                 ),
+                 SizedBox(height: 8),
+                 Text(
+                   '\u{20B9}550.40',
+                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.green),
+                 ),
+               ],
+             ),
               const SizedBox(height: 16),
-              // Input Fields
-              const RideInputField(
-                icon: Icons.calendar_today,
-                label: 'Date of Journey',
-                isNumberInput: false,
+              // Date of Journey Field
+              GestureDetector(
+                onTap: () => _selectDate(context),
+                child: RideInputField(
+                  icon: Icons.calendar_today,
+                  label: _selectedDate == null
+                      ? 'Date of Journey'
+                      : '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}',
+                  isNumberInput: false,
+                  isReadOnly: true,
+                ),
               ),
-              const RideInputField(
+              // Person Count Field
+              RideInputField(
                 icon: Icons.person,
-                label: '1 Person',
+                label: '$_personCount Person${_personCount > 1 ? 's' : ''}',
                 isNumberInput: true,
                 hasIncrementDecrement: true,
+                onIncrement: () {
+                  setState(() {
+                    _personCount++;
+                  });
+                },
+                onDecrement: () {
+                  setState(() {
+                    if (_personCount > 1) {
+                      _personCount--;
+                    }
+                  });
+                },
               ),
+              // Desired Fare Field
               const RideInputField(
                 icon: Icons.attach_money,
                 label: 'Desired Fare',
@@ -147,6 +196,9 @@ class RideInputField extends StatelessWidget {
   final String label;
   final bool isNumberInput;
   final bool hasIncrementDecrement;
+  final VoidCallback? onIncrement;
+  final VoidCallback? onDecrement;
+  final bool isReadOnly;
 
   const RideInputField({
     Key? key,
@@ -154,6 +206,9 @@ class RideInputField extends StatelessWidget {
     required this.label,
     this.isNumberInput = false,
     this.hasIncrementDecrement = false,
+    this.onIncrement,
+    this.onDecrement,
+    this.isReadOnly = false,
   }) : super(key: key);
 
   @override
@@ -170,6 +225,7 @@ class RideInputField extends StatelessWidget {
                 hintText: label,
                 border: const UnderlineInputBorder(),
               ),
+              readOnly: isReadOnly,
               keyboardType: isNumberInput ? TextInputType.number : TextInputType.text,
             ),
           ),
@@ -178,11 +234,11 @@ class RideInputField extends StatelessWidget {
               children: [
                 IconButton(
                   icon: const Icon(Icons.add, color: Colors.green),
-                  onPressed: () {},
+                  onPressed: onIncrement,
                 ),
                 IconButton(
                   icon: const Icon(Icons.remove, color: Colors.red),
-                  onPressed: () {},
+                  onPressed: onDecrement,
                 ),
               ],
             ),
