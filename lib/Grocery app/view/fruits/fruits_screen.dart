@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:new_grocery_app/util/constant.dart';
-import 'package:new_grocery_app/util/icons.dart';
 
 import '../../generated/l10n.dart';
 import '../../util/color_category.dart';
+import '../../util/constant.dart';
 import '../../util/constant_widget.dart';
+import '../../util/icons.dart';
 import 'model/fruit_data_model.dart';
 import 'model_data/fruit_data.dart';
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:new_grocery_app/util/color_category.dart';
-import 'package:new_grocery_app/util/constant.dart';
-import 'package:new_grocery_app/util/constant_widget.dart';
-import 'package:new_grocery_app/util/images.dart';
+import 'package:untitled/Grocery%20app/util/images.dart';
 
 import '../../generated/l10n.dart';
 import '../../routes/app_routes.dart';
+import '../../util/color_category.dart';
+import '../../util/constant.dart';
+import '../../util/constant_widget.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);

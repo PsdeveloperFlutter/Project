@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:new_grocery_app/util/icons.dart';
 
 import '../../generated/l10n.dart';
 import '../../util/color_category.dart';
 import '../../util/constant.dart';
 import '../../util/constant_widget.dart';
 
+import '../../util/icons.dart';
 import '../home/home_screen.dart';
 import 'controller/home_main_screen_controller.dart';
 
