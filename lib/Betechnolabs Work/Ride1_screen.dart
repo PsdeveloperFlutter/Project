@@ -103,14 +103,14 @@ class _RideScreenState extends State<RideScreen> {
                 ),
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       children: [
-                        const CircleAvatar(
+                        CircleAvatar(
                           backgroundImage: AssetImage('assets/images/profile.png'),
                           radius: 24,
                         ),
-                        const SizedBox(width: 16),
-                        const Expanded(
+                        SizedBox(width: 16),
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -134,7 +134,7 @@ class _RideScreenState extends State<RideScreen> {
                             ],
                           ),
                         ),
-                        const Chip(
+                        Chip(
                           label: Text(
                             "Active",
                             style: TextStyle(color: Colors.white),
