@@ -56,44 +56,46 @@ class _FruitScreenState extends State<FruitScreen> {
                     crossAxisSpacing: 16.h),
                 itemBuilder: (context, index) {
                   Fruit data = fruit[index];
-                  return Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 2),
-                          blurRadius: 23,
-                          color: regularBlack.withOpacity(0.07)
-                        )
-                      ],
-                        borderRadius: BorderRadius.circular(16.h),
-                        color: regularWhite),
-                    child: Stack(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            getVerSpace(16.h),
-                            getAssetImage(data.image!,height: 109.h,width: double.infinity),
-                            getCustomFont(data.name!, 16.sp, regularBlack, 1,fontWeight: FontWeight.w600),
-                            getVerSpace(4.h),
-                            getCustomFont(
-                                "${data.weight!} KG", 12.sp, grayColor, 1,fontWeight: FontWeight.w400),
-                            getVerSpace(8.h),
-                            getCustomFont(data.price!, 18.sp, regularBlack, 1,fontWeight: FontWeight.w600),
-                          ],
-                        ).paddingSymmetric(horizontal: 16.h),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Container(
-
-                            height: 40.h,
-                              width: 40.h,
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.h),
-                            color: buttonColor),
-                            child: getSvgImage(GetIcons.addIcon).paddingAll(8.h),
-                          ),
-                        ).paddingOnly(bottom: 16.h,right: 16.h)
-                      ],
+                  return SingleChildScrollView(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 2),
+                            blurRadius: 23,
+                            color: regularBlack.withOpacity(0.07)
+                          )
+                        ],
+                          borderRadius: BorderRadius.circular(16.h),
+                          color: regularWhite),
+                      child: Stack(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              getVerSpace(16.h),
+                              getAssetImage(data.image!,height: 109.h,width: double.infinity),
+                              getCustomFont(data.name!, 16.sp, regularBlack, 1,fontWeight: FontWeight.w600),
+                              getVerSpace(4.h),
+                              getCustomFont(
+                                  "${data.weight!} KG", 12.sp, grayColor, 1,fontWeight: FontWeight.w400),
+                              getVerSpace(8.h),
+                              getCustomFont(data.price!, 18.sp, regularBlack, 1,fontWeight: FontWeight.w600),
+                            ],
+                          ).paddingSymmetric(horizontal: 16.h),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                    
+                              height: 40.h,
+                                width: 40.h,
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.h),
+                              color: buttonColor),
+                              child: getSvgImage(GetIcons.addIcon).paddingAll(8.h),
+                            ),
+                          ).paddingOnly(bottom: 16.h,right: 16.h)
+                        ],
+                      ),
                     ),
                   );
                 },
