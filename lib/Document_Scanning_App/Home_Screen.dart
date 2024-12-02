@@ -21,20 +21,43 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.blueAccent,
 
               child: Container(
-                height: 100,
+                height: 70,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
 
-                    IconButton(onPressed: (){}, icon: Icon(Icons.rotate_left,size:35,color: Colors.white,)),
-                    IconButton(onPressed: (){}, icon: Icon(Icons.camera,size:50,color: Colors.white,)),
-                    IconButton(onPressed: (){}, icon: Icon(Icons.image_outlined,size:35,color: Colors.white,)),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(onPressed: (){}, icon: Icon(Icons.scanner_outlined,size:25,color: Colors.white,)),
+                        Text("Scan",style: TextStyle(color: Colors.white,fontSize: 12),),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(onPressed: (){}, icon: Icon(Icons.document_scanner,size:25,color: Colors.black,)),
+                        Text("Recognize",style: TextStyle(color: Colors.white,fontSize: 12),),
+                      ],
+                    ),
+
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(onPressed: (){}, icon: Icon(Icons.assignment_sharp,size:25,color: Colors.white,)),
+                        Text("Enhance",style: TextStyle(color: Colors.white,fontSize: 12),),
+
+                      ],
+                    ),
 
                   ],
                 ),
               ),
             ),
+
+
+
             Card(
 
               color: Colors.blueAccent,
