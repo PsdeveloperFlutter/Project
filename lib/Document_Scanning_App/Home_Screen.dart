@@ -12,9 +12,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:Container(
-        padding: EdgeInsets.only(top:55),
+        padding: EdgeInsets.only(top:55,bottom: 15,left: 5,right: 5),
         color: Colors.white,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Card(
 
@@ -55,8 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+           Card(
+             color: Colors.black,
+             child: Container(
+               height: MediaQuery.of(context).size.height-300,
 
-
+             ),
+           )
+,
 
             Card(
 
